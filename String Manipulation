@@ -1,0 +1,96 @@
+/*
+ * Author: Brendon Baughn
+ * Version: 20190815.05
+ * Description: Jumping back into programming after a 
+ * long summer off. Playing around with Strings to refresh memory
+ */
+import java.util.Scanner;
+public class StringPlay {
+	
+	// Universal Peripherals
+	private static String firstname = "";
+	private static String lastname = "";
+	private static String lowercase = "abcdefghijklmnopqrstuvwxyz";
+	private static String uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	
+	// Method to split the string into two names by first and last with no extra space at last name
+	public static void NameSplit(String name) {
+		firstname = name.substring(0, name.indexOf(" "));
+		lastname = name.substring(name.indexOf(" ")).trim();
+	}
+	
+	// Method to flip the name, ran twice
+	public static String NameFlip(String name) {
+		
+		// For loop, run each letter from back to front and add to string
+		String flip = "";
+		for (int i = name.length() - 1; i >= 0; --i) {
+			flip = flip + name.charAt(i);
+			flip = flip.toLowerCase();
+		}
+		// Capitalize first letter of the name
+		for (int i = 0; i < lowercase.length(); ++i) {
+			if (Character.toString(flip.charAt(0)).equals(Character.toString(lowercase.charAt(i)))) {
+				flip = Character.toString(uppercase.charAt(i)) + flip.substring(1);
+			}
+		}
+		return flip;
+	}
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		
+		// How many letters are in the name, used later
+		String numCount1 = "";
+		String numCount2 = "";
+		
+		// Ask user for first and last name
+		System.out.print("Enter Your First And Last Name: ");
+		String fandl = in.nextLine().trim();
+		
+		// Make sure user only enters first and last name
+		int count = 0;
+		for (int i = 0; i < fandl.length(); ++i) {
+			if (Character.isWhitespace(fandl.charAt(i))) {
+				++count;
+			}
+			while (count >= 2) {
+				fandl = "";
+				System.out.print("Only enter Your First And Last Name: ");
+				fandl = in.nextLine().trim();
+				i = 0;
+				count = 0;
+			}
+		}
+		
+		// METHODS: Split and flip the names using Methods
+		NameSplit(fandl);
+		String flipFirst = NameFlip(firstname);
+		String flipLast = NameFlip(lastname);
+		
+		// Proper grammar use in Output
+		if (firstname.length() >= 2) {
+			numCount1 = "letters";
+		} else {
+			numCount1 = "letter";
+		}
+		if (lastname.length() >= 2) {
+			numCount2 = "letters";
+		} else {
+			numCount2 = "letter";
+		}
+		
+		// Output
+
+		System.out.println();
+		System.out.print("Your name is " + fandl + "\n");
+		System.out.println("Your first name is " + firstname + " and your last name is " + lastname);
+		System.out.println("Your first name has " + firstname.length() + " " + numCount1 + ", and your "
+				+ "last name has " + lastname.length() + " " + numCount2);
+		System.out.println("Your first name flipped is " + flipFirst + ", and your last name"
+				+ " flipped is " + flipLast + ". Your new name is " + flipFirst + " " + flipLast + "!");
+		
+		in.close();
+	}
+
+}
